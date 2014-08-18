@@ -1,0 +1,108 @@
+{# Load the tag library #}
+{% load bootstrap3 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    {% bootstrap_css %}
+    <style type="text/css">
+      .map { height: 300px; width: 100%; margin-bottom: 10px;}
+      .container {width: 80%}
+    </style>
+    <script src="{% bootstrap_jquery_url %}"></script>
+    {% bootstrap_javascript %}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+</script>
+
+<script type="text/javascript">
+  function initialize() {
+    var map = new L.Map("terrain", {
+        center: new L.LatLng(37.8, -122.4),
+        zoom: 10
+    });
+    map.addLayer(new L.StamenTileLayer("terrain", {
+        detectRetina: true
+        }
+    ));
+
+    var markers = [];
+    var bbox = []
+    {% for fruit_location in object_list %}
+        markers.push(L.marker([{{fruit_location.latitude}}, {{fruit_location.longitude}}]).addTo(map));
+        bbox.push([{{fruit_location.latitude}}, {{fruit_location.longitude}}]);
+    {% endfor %}
+    map.fitBounds(bbox);
+    // map.setZoom(1);
+    // console.log(map.getZoom() - 5);
+  var autocomplete = new google.maps.places.Autocomplete(
+      /** @type {HTMLInputElement} */(document.getElementById('id_address')),
+      { types: ['geocode'] });
+    }
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+<body>
+
+<body>
+    <div class="container">
+      <div class="header">
+        <h1 class="text-muted">Fruitloop Angular!</h1>
+      </div>
+      <div class="row">
+        {% bootstrap_messages %}  
+        {{ form.non_field_errors }}
+        {{ form.address.errors }}
+        {{ form.fruit_type.errors }}
+        {{ form.comment.errors }}  
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="well">
+            <p class="lead">Find trees in your neighborhood.</p>
+            <!-- <div id="map-canvas"></div> -->
+            <div id="terrain" class="map"></div>
+            <!-- <div id="watercolor" class="map leaflet-container leaflet-fade-anim" tabindex="0" style="position: relative;"></div> -->
+            {# Display a form #}
+            <form action="" method="post" class="form">
+                {% csrf_token %}
+                {% bootstrap_form form layout='inline' %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    {% bootstrap_icon "star" %} Add a new tree
+                </button>
+                {% endbuttons %}
+            </form>
+          </div>
+        </div>    
+        <div class="col-sm-offset-1 col-sm-5">
+          <div class="row marketing">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Tree Type</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for fruit_location in object_list %}
+                <tr>
+                  <td>{{ fruit_location.fruit_type }}</td>
+                  <td>{{ fruit_location.address }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>          
+        </div>    
+      </div>
+      <div class="footer">
+        <p>© Fruitloop Django for PDXPython 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+</body>
+</html>
