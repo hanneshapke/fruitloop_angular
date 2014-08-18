@@ -7,6 +7,8 @@
     <script src="{{ STATIC_URL }}js/fruitloop/controller.js"></script>
   </head>
   <body ng-controller="FruitLocationCtrl">
-    <h3> Hello {{ region }}! </h3>
+    {% verbatim %}
+        <h3> Hello {{ region }}! </h3>
+    {% endverbatim %}
   </body>
 </html>
