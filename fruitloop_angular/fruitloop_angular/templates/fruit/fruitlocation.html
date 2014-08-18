@@ -1,0 +1,12 @@
+{% load staticfiles %}
+
+<!doctype html>
+<html ng-app="fruitApp">
+  <head>
+    <script src="{{ STATIC_URL }}js/angular/angular.min.js"></script>
+    <script src="{{ STATIC_URL }}js/fruitloop/controller.js"></script>
+  </head>
+  <body ng-controller="FruitLocationCtrl">
+    <h3> Hello {{ region }}! </h3>
+  </body>
+</html>
