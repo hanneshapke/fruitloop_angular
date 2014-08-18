@@ -1,20 +1,15 @@
-from django.views.generic.edit import CreateView
-from django.core.urlresolvers import reverse_lazy
-
 from .models import FruitLocation
-from .forms import FruitLocationForm
+from .serializers import FruitSerializer
+from rest_framework import generics
 
 
-class FruitLocationCreateView(CreateView):
+class FruitAPIList(generics.ListCreateAPIView):
+    queryset = FruitLocation.objects.filter(
+        latitude__isnull=False).filter(
+        longitude__isnull=False)
+    serializer_class = FruitSerializer
 
-    model = FruitLocation
-    form = FruitLocationForm
-    success_url = reverse_lazy('home')
-    template = 'fruit/fruitlocation_list.html'
-    fields = ['address', 'fruit_type', 'comment']
 
-    def get_context_data(self, **kwargs):
-        context = super(FruitLocationCreateView,
-                        self).get_context_data(**kwargs)
-        context['object_list'] = FruitLocation.objects.all()
-        return context
+class FruitAPIDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = FruitLocation.objects.all()
+    serializer_class = FruitSerializer
