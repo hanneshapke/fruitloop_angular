@@ -5,15 +5,59 @@
   <head>
     <script src="{{ STATIC_URL }}js/angular/angular.min.js"></script>
     <script src="{{ STATIC_URL }}js/angular-resource/angular-resource.min.js"></script>
+    <script src="{{ STATIC_URL }}js/leaflet-dist/leaflet.js"></script>
+    <script src="{{ STATIC_URL }}js/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <script src="{{ STATIC_URL }}js/fruitloop/services.js"></script>
     <script src="{{ STATIC_URL }}js/fruitloop/controller.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/leaflet-dist/leaflet.css" />
+    <style media="screen" type="text/css">
+        .angular-leaflet-map { height: 300px; width: 100%; margin-bottom: 10px; }
+    </style>
   </head>
   <body ng-controller="FruitLocationCtrl">
     {% verbatim %}
-        <h3> Hello {{ region }}! </h3>
-        <ul>
-            <li ng-repeat="tree in fruitLocations"> {{ tree.fruit_name }} - {{ tree.address }} @ {{ tree.latitude }} / {{ tree.longitude }}</li>
-        </ul>
+    <div class="container">
+      <div class="header">
+        <h1 class="text-muted">Fruitloop AngularJS!</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="well">
+            <p class="lead">Find trees in your neighborhood.</p>
+            <leaflet markers="markers" center="center"></leaflet>
+            <!-- <form action="" method="post" class="form">
+                <button type="submit" class="btn btn-primary">
+                    Add a new tree
+                </button>
+            </form> -->
+          </div>
+        </div>
+        <div class="col-sm-offset-1 col-sm-5">
+          <div class="row marketing">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Tree Type</th>
+                  <th>Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="fruit in fruitLocations">
+                  <td>{{ fruit.fruit_name }}</td>
+                  <td>{{ fruit.address }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>© Fruitloop Django for PDXPython 2014</p>
+      </div>
+
+    </div> <!-- /container -->
     {% endverbatim %}
   </body>
 </html>
