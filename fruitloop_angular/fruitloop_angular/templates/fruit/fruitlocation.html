@@ -4,11 +4,16 @@
 <html ng-app="fruitApp">
   <head>
     <script src="{{ STATIC_URL }}js/angular/angular.min.js"></script>
+    <script src="{{ STATIC_URL }}js/angular-resource/angular-resource.min.js"></script>
+    <script src="{{ STATIC_URL }}js/fruitloop/services.js"></script>
     <script src="{{ STATIC_URL }}js/fruitloop/controller.js"></script>
   </head>
   <body ng-controller="FruitLocationCtrl">
     {% verbatim %}
         <h3> Hello {{ region }}! </h3>
+        <ul>
+            <li ng-repeat="tree in fruitLocations"> {{ tree.fruit_type }} - {{ tree.address }} @ {{ tree.latitude }} / {{ tree.longitude }}</li>
+        </ul>
     {% endverbatim %}
   </body>
 </html>

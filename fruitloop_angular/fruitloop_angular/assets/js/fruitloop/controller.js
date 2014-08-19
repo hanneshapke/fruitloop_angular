@@ -1,16 +1,10 @@
 // initialize an angular app with the name fruitApp
 // load dependencies here if needed
-var fruitApp = angular.module('fruitApp', []);
+var fruitApp = angular.module('fruitApp', ['fruitServices']);
 
 // create an anguar controller to serve the static data
-fruitApp.controller('FruitLocationCtrl', function ($scope) {
+fruitApp.controller('FruitLocationCtrl', function ($scope, FruitLocationService) {
     $scope.region = 'World';
-    $scope.trees = [
-        {'type': 'Cherry tree',
-         'snippet': 'Somewhere in NE Portland'},
-        {'type': 'Apple tree',
-         'snippet': 'Somewhere in Sellwood'},
-        {'type': 'Blackberry bush',
-         'address': 'Somewhere in Buckman'}
-    ];
+    // retrieve the data from API endpoint
+    $scope.fruitLocations = FruitLocationService.query();
 });
