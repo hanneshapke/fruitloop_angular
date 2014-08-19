@@ -3,11 +3,13 @@
 <!doctype html>
 <html ng-app="fruitApp">
   <head>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="{{ STATIC_URL }}js/angular/angular.min.js"></script>
     <script src="{{ STATIC_URL }}js/angular-resource/angular-resource.min.js"></script>
     <script src="{{ STATIC_URL }}js/leaflet-dist/leaflet.js"></script>
     <script src="{{ STATIC_URL }}js/angular-leaflet-directive/dist/angular-leaflet-directive.min.js"></script>
     <script src="{{ STATIC_URL }}js/fruitloop/services.js"></script>
+    <script src="{{ STATIC_URL }}js/fruitloop/directives.js"></script>
     <script src="{{ STATIC_URL }}js/fruitloop/controller.js"></script>
     <!-- CSS -->
     <link rel="stylesheet" href="{{ STATIC_URL }}js/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,11 +29,38 @@
           <div class="well">
             <p class="lead">Find trees in your neighborhood.</p>
             <leaflet markers="markers" center="center"></leaflet>
-            <!-- <form action="" method="post" class="form">
-                <button type="submit" class="btn btn-primary">
-                    Add a new tree
-                </button>
-            </form> -->
+            <form action="" method="post" class="form"
+                  ng-submit="addFruit(fruit)">
+              <div class="form-group">
+                <label class="sr-only" for="id_address">Address</label>
+                <input class="form-control" id="id_address" maxlength="50"
+                       name="address" placeholder="Address" required="required"
+                       title="" type="text" autocomplete="off"
+                       ng-model="fruit.address" googleplace/>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="id_fruit_type">Fruit type</label>
+                <select class="form-control" id="id_fruit_type"
+                        name="fruit_type" required="required" title=""
+                        ng-model="fruit.type">
+                  <option value="" selected="selected">---------</option>
+                  <option value="1">Cherry tree</option>
+                  <option value="2">Peach tree</option>
+                  <option value="3">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="id_comment">Comment</label>
+                <textarea class="form-control" cols="40" id="id_comment"
+                          name="comment" placeholder="Comment" rows="10"
+                          title="" ng-model="fruit.comment"></textarea>
+              </div>
+              <div class="form-group">
+              <button type="submit" class="btn btn-primary">
+                  <span class="glyphicon glyphicon-star"></span> Add a new tree
+              </button>
+              </div>
+            </form>
           </div>
         </div>
         <div class="col-sm-offset-1 col-sm-5">

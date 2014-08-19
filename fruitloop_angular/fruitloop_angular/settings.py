@@ -99,3 +99,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'fruitloop_angular/assets/'),
 )
+
+# Required for POST/PUT requests by the Django REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': []
+}
