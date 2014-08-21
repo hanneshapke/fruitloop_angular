@@ -65,15 +65,20 @@
         </div>
         <div class="col-sm-offset-1 col-sm-5">
           <div class="row marketing">
-            <table class="table table-striped">
+            <div class="form-group">
+              <label> Search
+                <input class="form-control" type="text" ng-model="query">
+              </label>
+            </div>
+            <table class="table table-striped" ng-init="reverse=true; column='address'">
               <thead>
                 <tr>
-                  <th>Tree Type</th>
-                  <th>Address</th>
+                  <th><a href="" ng-click="reverse=!reverse;column='fruit_name'">Tree Type</a></th>
+                  <th><a href="" ng-click="reverse=!reverse;column='address'">Address</a></th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="fruit in fruitLocations">
+                <tr ng-repeat="fruit in fruitLocations | filter: query | orderBy:column:reverse">
                   <td>{{ fruit.fruit_name }}</td>
                   <td>{{ fruit.address }}</td>
                 </tr>
