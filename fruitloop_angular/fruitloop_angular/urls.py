@@ -14,4 +14,5 @@ urlpatterns = patterns(
     url(r'^api/$', FruitAPIList.as_view(), name='api_list'),
     url(r'^api/(?P<pk>[0-9]+)/$', FruitAPIDetail.as_view(), name='api_detail'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
 )

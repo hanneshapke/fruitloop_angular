@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'south',
     'rest_framework',
     'django_extensions',
-    # 'bootstrap3',
+    'rest_framework_swagger',
     # project pkgs
     'fruit',
 )
